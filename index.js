@@ -4,7 +4,26 @@ import { toArabic } from 'roman-numerals'
 const postcssRomanNumerals = () => ({
   postcssPlugin: 'postcss-roman-numerals',
   Declaration: decl => {
-    let units = ['%', 'px', 'rem', 'em', 'vh', 'vw']
+    let units = [
+      'vmin',
+      'vmax',
+      'rem',
+      'em',
+      'ex',
+      'px',
+      'cm',
+      'mm',
+      'in',
+      'pt',
+      'pc',
+      'ch',
+      'vh',
+      'vw',
+      'vi',
+      'vb',
+      '%',
+    ]
+
     let declValue = decl.value
     let parsedValue = valueParser(declValue)
 
