@@ -1,6 +1,6 @@
 {
   "name": "postcss-roman-numerals",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "PostCSS plugin that allows to use roman numerals in your CSS code",
   "keywords": [
     "postcss",
