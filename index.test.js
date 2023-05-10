@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import postcss from 'postcss'
 
-import postcssRomanNumerals from '.'
+import postcssRomanNumerals from './index'
 
 let testPlugin = async (input, output) => {
   let result = await postcss([postcssRomanNumerals()]).process(input)
