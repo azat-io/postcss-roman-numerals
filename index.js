@@ -1,17 +1,28 @@
-var postcss = require('postcss');
-var toArabic = require('roman-numerals').toArabic;
+import valueParser from 'postcss-value-parser'
+import { toArabic } from 'roman-numerals'
 
-module.exports = postcss.plugin('postcss-roman-numerals', function () {
-    var units = ['%', 'px', 'rem', 'em', 'vh', 'vw'];
+const postcssRomanNumerals = () => ({
+  postcssPlugin: 'postcss-roman-numerals',
+  Declaration: decl => {
+    let units = ['%', 'px', 'rem', 'em', 'vh', 'vw']
+    let declValue = decl.value
+    let parsedValue = valueParser(declValue)
 
-    return function (root) {
-        for (var i = 0, max = units.length; i < max; i++) {
-            var pattern = new RegExp('[IVXLCDM]+' + units[i], 'g');
+    parsedValue.walk(node => {
+      for (let i = 0, max = units.length; i < max; i++) {
+        let pattern = new RegExp('[IVXLCDM]+' + units[i], 'g')
 
-            root.replaceValues(pattern, { fast: units[i] }, function (string) {
-                string = string.replace(units[i], '');
-                return toArabic(string) + units[i];
-            });
+        if (pattern.test(node.value)) {
+          let number = parsedValue.toString().replace(units[i], '')
+          node.value = `${toArabic(number)}${units[i]}`
+          decl.cloneBefore({ value: parsedValue.toString() })
+          decl.remove()
         }
-    };
-});
+      }
+    })
+  },
+})
+
+postcssRomanNumerals.postcss = true
+
+export default postcssRomanNumerals

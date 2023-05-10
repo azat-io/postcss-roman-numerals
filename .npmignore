@@ -1,9 +1,0 @@
-.gitignore
-.editorconfig
-
-node_modules/
-npm-debug.log
-yarn-error.log
-
-*.test.js
-.travis.yml

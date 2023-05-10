@@ -1,8 +1,16 @@
-# Node.js / NPM
+# Node.js
+node_modules/
+.pnpm-debug.log*
 
-node_modules
-npm-debug.log
+# Build
+dist/
 
-# Yarn
+# Testing
+coverage/
 
-yarn-error.log
+# Editor
+.vscode/
+.vim/
+
+# Misc
+.DS_Store

@@ -1,27 +1,28 @@
-var postcss = require('postcss');
+import { describe, expect, it } from 'vitest'
+import postcss from 'postcss'
 
-var plugin = require('./');
+import postcssRomanNumerals from '.'
 
-function run(input, output, opts) {
-    return postcss([ plugin(opts) ]).process(input)
-        .then(result => {
-            expect(result.css).toEqual(output);
-            expect(result.warnings().length).toBe(0);
-        });
+let testPlugin = async (input, output) => {
+  let result = await postcss([postcssRomanNumerals()]).process(input)
+  expect(result.css).toBe(output)
+  expect(result.warnings).toHaveLength(0)
 }
 
-it('Works with percents', () => {
-    return run('img{ width: L% }', 'img{ width: 50% }', { });
-});
+describe('postcss-roman-numerals', () => {
+  it('works with percents', async () => {
+    await testPlugin('img{ width: L% }', 'img{ width: 50% }')
+  })
 
-it('Works with pixels', () => {
-    return run('p{ line-height: XIVpx }', 'p{ line-height: 14px }', { });
-});
+  it('works with pixels', async () => {
+    await testPlugin('p{ line-height: XIVpx }', 'p{ line-height: 14px }')
+  })
 
-it('Works with sizes of elements', () => {
-    return run('p{ font-size: IIem }', 'p{ font-size: 2em }', { });
-});
+  it('works with sizes of elements', async () => {
+    await testPlugin('p{ font-size: IIem }', 'p{ font-size: 2em }')
+  })
 
-it('Works with height of the viewport', () => {
-    return run('.app{ min-height: Cvh }', '.app{ min-height: 100vh }', { });
-});
+  it('works with height of the viewport', async () => {
+    await testPlugin('.app{ min-height: Cvh }', '.app{ min-height: 100vh }')
+  })
+})

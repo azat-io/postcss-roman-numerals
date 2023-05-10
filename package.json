@@ -11,26 +11,31 @@
   "author": "Azat S. <to@azat.io>",
   "license": "MIT",
   "repository": "azat-io/postcss-roman-numerals",
-  "bugs": {
-    "url": "https://github.com/azat-io/postcss-roman-numerals/issues"
+  "scripts": {
+    "build": "vite build",
+    "release": "pnpm release:check && pnpm release:version && pnpm release:publish",
+    "release:changelog": "standard-version --infile changelog.md --same-file --skip.bump --skip.commit --skip.tag",
+    "release:check": "pnpm test && pnpm build",
+    "release:publish": "clean-publish",
+    "release:version": "bumpp package.json --execute=\"pnpm release:changelog && git add changelog.md\" --commit \"build: publish v%s\" --tag --all",
+    "lint": "eslint .",
+    "test:unit": "vitest run --coverage",
+    "test": "pnpm lint && pnpm test:unit"
   },
-  "homepage": "https://github.com/azat-io/postcss-roman-numerals",
+  "peerDependencies": {
+    "postcss": "^8.4.23"
+  },
   "dependencies": {
-    "postcss": "^5.2.6",
+    "postcss-value-parser": "^4.2.0",
     "roman-numerals": "^0.3.2"
   },
   "devDependencies": {
-    "eslint": "^3.12.2",
-    "eslint-config-postcss": "^2.0.2",
-    "jest": "^18.0.0"
-  },
-  "scripts": {
-    "test": "jest && eslint *.js"
-  },
-  "eslintConfig": {
-    "extends": "eslint-config-postcss/es5",
-    "env": {
-      "jest": true
-    }
+    "@azat-io/eslint-config": "^0.8.0",
+    "@vitest/coverage-c8": "^0.31.0",
+    "clean-publish": "^4.2.0",
+    "eslint": "^8.40.0",
+    "postcss": "^8.4.23",
+    "vite": "^4.3.5",
+    "vitest": "^0.31.0"
   }
 }
