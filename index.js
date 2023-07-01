@@ -2,7 +2,6 @@ import valueParser from 'postcss-value-parser'
 import { toArabic } from 'roman-numerals'
 
 const postcssRomanNumerals = () => ({
-  postcssPlugin: 'postcss-roman-numerals',
   Declaration: decl => {
     let units = [
       'vmin',
@@ -40,6 +39,7 @@ const postcssRomanNumerals = () => ({
       }
     })
   },
+  postcssPlugin: 'postcss-roman-numerals',
 })
 
 postcssRomanNumerals.postcss = true
